@@ -5,6 +5,7 @@ import {makeStyles, useTheme} from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import ButtonArrow from './original.js';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import {Link} from 'react-router-dom';
 
 import background from '../../assets/background.jpg';
 import mobileBackground from '../../assets/mobileBackground.jpg';
@@ -44,7 +45,7 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-export default function CallToAction(){
+export default function CallToAction(props){
     const classes = useStyles();
     const theme = useTheme();
     const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
@@ -57,7 +58,7 @@ export default function CallToAction(){
                         <Typography variant="h2">Simple Software. <br />Revolutionary Results.</Typography>
                         <Typography variant="subtitle2" style={{fontSize: "1.5rem"}}>Take advantage of the 21st Century.</Typography>
                             <Grid container item justify={matchesSM ? "center" : undefined}>
-                                <Button variant="outlined" className={classes.learnButton}>
+                                <Button variant="outlined" className={classes.learnButton} component={Link} to="/revolution" onClick={()=>{props.setValue(2);}}>
                                     <span style={{marginRight: 8}}>Learn More</span>
                                     <ButtonArrow width={10} height={10} fill={theme.palette.common.arcBlue} />
                                 </Button>
@@ -66,7 +67,7 @@ export default function CallToAction(){
                 </Grid>
             </Grid>
             <Grid item style={{marginRight: "3em", marginLeft: "2em"}}>
-                <Button variant="contained" className={classes.estimateButton}>Free Estimate</Button>
+                <Button variant="contained" className={classes.estimateButton} component={Link} to="/estimate" onClick={()=>{props.setValue(5);}}>Free Estimate</Button>
             </Grid>
         </Grid>
     );

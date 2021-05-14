@@ -2,6 +2,7 @@ import React from 'react';
 import Lottie from 'react-lottie';
 
 import {makeStyles, useTheme} from '@material-ui/core/styles';
+import {Link} from 'react-router-dom';
 
 import animationData from "../animations/landinganimation/data";
 import customSoftwareIcon from "../assets/Custom Software Icon.svg";
@@ -126,7 +127,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export default function LandingPage(){
+export default function LandingPage(props){
     const classes = useStyles();
     const theme = useTheme();
 
@@ -149,12 +150,12 @@ export default function LandingPage(){
                         <Typography align="center" variant="h2">Bringing West Coast Technology<br /> to the Midwest</Typography>
                         <Grid container className={classes.buttonContainer} justify="center">
                             <Grid item>
-                                <Button className={classes.estimateButton} variant="contained">
+                                <Button className={classes.estimateButton} variant="contained" component={Link} to="/estimate" onClick={()=>props.setValue(5)}>
                                     Free Estimate
                                 </Button>
                             </Grid>
                             <Grid item>
-                                <Button className={classes.learnButtonHero} variant="outlined">
+                                <Button className={classes.learnButtonHero} variant="outlined" component={Link} to="/revolution" onClick={()=>props.setValue(2)}>
                                     <span style={{marginRight: 8}}>Learn More</span>
                                     <ButtonArrow width={15} height={15} fill="blue" />
                                 </Button>
@@ -178,7 +179,7 @@ export default function LandingPage(){
                         <Typography variant="subtitle1">
                             Complete digital solutions, front investigation to{" "} <span className={classes.specialText}>celebration.</span>
                         </Typography>
-                        <Button variant="outlined">
+                        <Button variant="outlined" component={Link} to="/customsoftware" onClick={()=>{props.setValue(1); props.setSelectedIndex(1);}}>
                         <span style={{marginRight: 8}}>Learn More</span>
                         <ButtonArrow width={10} height={10} fill="blue" />
                         </Button>
@@ -200,7 +201,7 @@ export default function LandingPage(){
                         <Typography variant="subtitle1">
                            Integrate your web experience or create a standalone app{matchesSM ? null : <br />} with either mobile platform.
                         </Typography>
-                        <Button variant="outlined">
+                        <Button variant="outlined" component={Link} to="/mobileapps" onClick={()=>{props.setValue(1); props.setSelectedIndex(2);}}>
                         <span style={{marginRight: 8}}>Learn More</span>
                         <ButtonArrow width={10} height={10} fill="blue" />
                         </Button>
@@ -222,7 +223,7 @@ export default function LandingPage(){
                         <Typography variant="subtitle1">
                         optimized for search engines, built for speed.
                         </Typography>
-                        <Button variant="outlined">
+                        <Button variant="outlined" component={Link} to="/websites" onClick={()=>{props.setValue(1); props.setSelectedIndex(3);}}>
                         <span style={{marginRight: 8}}>Learn More</span>
                         <ButtonArrow width={10} height={10} fill="blue" />
                         </Button>
@@ -244,7 +245,7 @@ export default function LandingPage(){
                                     <Typography variant="subtitle1">
                                         Visionary Insights coupled with cutting-edge technology is a recipe for revolution.
                                     </Typography>
-                                    <Button variant="outlined">
+                                    <Button variant="outlined" component={Link} to="/revolution" onClick={()=>{props.setValue(2);}}>
                                         <span style={{marginRight: 8}}>Learn More</span>
                                         <ButtonArrow width={10} height={10} fill="blue" />
                                     </Button>
@@ -263,7 +264,7 @@ export default function LandingPage(){
                                 <Typography variant="h2" style={{color:"white"}}>About Us</Typography>
                                 <Typography variant="subtitle2">Lets get personal</Typography>
                                 <Grid item>
-                                    <Button variant="outlined" style={{color: "white", borderColor: "white"}}>
+                                    <Button variant="outlined" style={{color: "white", borderColor: "white"}} component={Link} to="/about" onClick={()=>{props.setValue(3);}}>
                                         <span style={{marginRight: 8}}>Learn More</span>
                                         <ButtonArrow width={10} height={10} fill="white" />
                                     </Button>
@@ -275,7 +276,7 @@ export default function LandingPage(){
                                 <Typography variant="h2" style={{color:"white"}}>Contact Us</Typography>
                                 <Typography variant="subtitle2">Say hello <span role="img" aria-label="waving hand">👋</span></Typography>
                                 <Grid item>
-                                    <Button variant="outlined" style={{color: "white", borderColor: "white"}}>
+                                    <Button variant="outlined" style={{color: "white", borderColor: "white"}} component={Link} to="/contact" onClick={()=>{props.setValue(4);}}>
                                         <span style={{marginRight: 8}}>Learn More</span>
                                         <ButtonArrow width={10} height={10} fill="white" />
                                     </Button>
@@ -287,7 +288,7 @@ export default function LandingPage(){
                 </Grid>
             </Grid>
             <Grid item> {/*--- call to action block ---*/}
-                <CallToAction />
+                <CallToAction setValue={props.setValue} />
             </Grid>
         </Grid>
     );

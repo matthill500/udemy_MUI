@@ -236,7 +236,7 @@ export default function Header(props){
                     <Tab className={classes.tab} component={Link} to="/about" label="About Us" />
                     <Tab className={classes.tab} component={Link} to="/contact" label="Contact Us" />
                 </Tabs>
-                <Button variant="contained" color="secondary" className={classes.button}>
+                <Button variant="contained" color="secondary" component={Link} to="/estimate" onClick={() => props.setValue(5)} className={classes.button}>
                     Free Estimate
                 </Button>
                 <Menu id="simple-menu" anchorEl={anchorEl} open={openMenu} onClose={handleClose} classes={{paper: classes.menu}} MenuListProps={{onMouseLeave: handleClose}} elevation={0}>
