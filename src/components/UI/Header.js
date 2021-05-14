@@ -17,7 +17,6 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-// import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
 import logo from '../../assets/logo.svg';
@@ -71,7 +70,10 @@ function ElevationScroll(props) {
         borderRadius: "50px",
         marginLeft: "50px",
         marginRight: "25px",
-        height: "45px"
+        height: "45px",
+        "&:hover": {
+            backgroundColor: theme.palette.secondary.light
+        }
     },
     logoContainer:{
         padding:0,
@@ -83,6 +85,9 @@ function ElevationScroll(props) {
         backgroundColor: theme.palette.common.arcBlue,
         color: "white",
         borderRadius: "0px",
+        [theme.breakpoints.up("md")]:{
+            marginTop: "2em"
+        },
     },
     menuItem: {
         ...theme.typography.tab,
@@ -128,69 +133,68 @@ export default function Header(props){
     const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
 
     const [openDrawer, setOpenDrawer] = useState(false);
-    const [value, setValue] = useState(0);
     const [anchorEl, setAnchorEl] = useState(null);
     const [openMenu, setOpenMenu] = useState(false);
-    const [selectedIndex, setSelectedIndex] = useState(0);
+ 
 
     useEffect(() => {
         switch(window.location.pathname){
             case "/": 
-                if(value !== 0){
-                    setValue(0); 
+                if(props.value !== 0){
+                    props.setValue(0); 
                 }
                 break;
             case "/services": 
-                if(value !== 1){
-                    setValue(1);
-                    setSelectedIndex(0);
+                if(props.value !== 1){
+                    props.setValue(1);
+                    props.setSelectedIndex(0);
                 }
                 break;
             case "/customsoftware": 
-                if(value !== 1){
-                    setValue(1);
-                    setSelectedIndex(1);
+                if(props.value !== 1){
+                    props.setValue(1);
+                    props.setSelectedIndex(1);
                 }
                 break;
             case "/mobileapps": 
-                if(value !== 1){
-                    setValue(1);
-                    setSelectedIndex(2);
+                if(props.value !== 1){
+                    props.setValue(1);
+                    props.setSelectedIndex(2);
                 }
                 break;
             case "/websites": 
-                if(value !== 1){
-                    setValue(1);
-                    setSelectedIndex(3);
+                if(props.value !== 1){
+                    props.setValue(1);
+                    props.setSelectedIndex(3);
                 }
                 break;
             case "/revolution":
-                if(value !== 2){
-                    setValue(2);
+                if(props.value !== 2){
+                    props.setValue(2);
                 }
                 break;
             case "/about":
-                if(value !== 3){
-                    setValue(3);
+                if(props.value !== 3){
+                    props.setValue(3);
                 }
                 break;
             case "/contact":
-                if(value !== 4){
-                    setValue(4);
+                if(props.value !== 4){
+                    props.setValue(4);
                 }
                 break;
             case "/estimate":
-                if(value !== 5){
-                    setValue(5);
+                if(props.value !== 5){
+                    props.setValue(5);
                 }
                 break;
             default: 
             break;
         }
-    }, [value]);
+    }, [props.value, props.selectedIndex]);
 
     const handleChange = (e, val) => {
-        setValue(val);
+        props.setValue(val);
     }
 
     const handleClick = (e) => {
@@ -201,7 +205,7 @@ export default function Header(props){
     const handleMenuItemClick = (e, index) => {
         setAnchorEl(null);
         setOpenMenu(false);
-        setSelectedIndex(index);
+        props.setSelectedIndex(index);
     }
 
     const handleClose = () => {
@@ -212,13 +216,13 @@ export default function Header(props){
     const menuOptions = [
         {name: "Services", link: "/"},
         {name: "Custom Software Development", link: "/customsoftware"},
-        {name: "Mobile App Development", link: "/mobileapps"},
+        {name: "iOS/Android App Development", link: "/mobileapps"},
         {name: "Website Development", link: "/websites"}
     ];
 
     const tabs = (
         <>
-        <Tabs value={value} onChange={handleChange} className={classes.tabContainer} indicatorColor="primary">
+        <Tabs value={props.value} onChange={handleChange} className={classes.tabContainer} indicatorColor="primary">
                     <Tab className={classes.tab} component={Link} to="/" label="Home" />
                     <Tab 
                     aria-owns={anchorEl ? "simple-menu" : undefined} 
@@ -237,7 +241,7 @@ export default function Header(props){
                 </Button>
                 <Menu id="simple-menu" anchorEl={anchorEl} open={openMenu} onClose={handleClose} classes={{paper: classes.menu}} MenuListProps={{onMouseLeave: handleClose}} elevation={0}>
                   {menuOptions.map((option, index) => (
-                      <MenuItem key={option} component={Link} to={option.link} classes={{root: classes.menuItem}} onClick={(event) => {handleMenuItemClick(event, index); setValue(1); handleClose()}} selected={index === selectedIndex && value === 1}>
+                      <MenuItem key={option} component={Link} to={option.link} classes={{root: classes.menuItem}} onClick={(event) => {handleMenuItemClick(event, index); props.setValue(1); handleClose()}} selected={index === props.selectedIndex && props.value === 1}>
                       {option.name}
                       </MenuItem>
                   ))}
@@ -250,23 +254,23 @@ export default function Header(props){
             <SwipeableDrawer classes={{paper: classes.drawer}} disableBackdropTransition={!iOS} disableDiscovery={iOS} open={openDrawer} onClose={() => setOpenDrawer(false)} onOpen={()=>setOpenDrawer(true)}>
                 <div className={classes.toolbarMargin} />
                 <List disablePadding>
-                    <ListItem divider button component={Link} to="/" selected={value === 0} onClick={() => {setOpenDrawer(false); setValue(0);}}>
-                        <ListItemText className={value === 0 ? `${classes.drawerItem} ${classes.drawerItemSelected}` : classes.drawerItem} disableTypography>Home</ListItemText>
+                    <ListItem divider button component={Link} to="/" selected={props.value === 0} onClick={() => {setOpenDrawer(false); props.setValue(0);}}>
+                        <ListItemText className={props.value === 0 ? `${classes.drawerItem} ${classes.drawerItemSelected}` : classes.drawerItem} disableTypography>Home</ListItemText>
                     </ListItem>
-                    <ListItem divider button component={Link} to="/services" selected={value === 1} onClick={() => {setOpenDrawer(false); setValue(1);}}>
-                        <ListItemText className={value === 1 ? `${classes.drawerItem} ${classes.drawerItemSelected}` : classes.drawerItem} disableTypography>Services</ListItemText>
+                    <ListItem divider button component={Link} to="/services" selected={props.value === 1} onClick={() => {setOpenDrawer(false); props.setValue(1);}}>
+                        <ListItemText className={props.value === 1 ? `${classes.drawerItem} ${classes.drawerItemSelected}` : classes.drawerItem} disableTypography>Services</ListItemText>
                     </ListItem>
-                    <ListItem divider button component={Link} to="/revolution" selected={value === 2} onClick={() => {setOpenDrawer(false); setValue(2);}}>
-                        <ListItemText className={value === 2 ? `${classes.drawerItem} ${classes.drawerItemSelected}` : classes.drawerItem} disableTypography>Revolution</ListItemText>
+                    <ListItem divider button component={Link} to="/revolution" selected={props.value === 2} onClick={() => {setOpenDrawer(false); props.setValue(2);}}>
+                        <ListItemText className={props.value === 2 ? `${classes.drawerItem} ${classes.drawerItemSelected}` : classes.drawerItem} disableTypography>Revolution</ListItemText>
                     </ListItem>
-                    <ListItem divider button component={Link} to="/about" selected={value === 3} onClick={() => {setOpenDrawer(false); setValue(3);}}>
-                        <ListItemText className={value === 3 ? `${classes.drawerItem} ${classes.drawerItemSelected}` : classes.drawerItem} disableTypography>About</ListItemText>
+                    <ListItem divider button component={Link} to="/about" selected={props.value === 3} onClick={() => {setOpenDrawer(false); props.setValue(3);}}>
+                        <ListItemText className={props.value === 3 ? `${classes.drawerItem} ${classes.drawerItemSelected}` : classes.drawerItem} disableTypography>About</ListItemText>
                     </ListItem>
-                    <ListItem divider button component={Link} to="/contact" selected={value === 4} onClick={() => {setOpenDrawer(false); setValue(4);}}>
-                        <ListItemText className={value === 4 ? `${classes.drawerItem} ${classes.drawerItemSelected}` : classes.drawerItem} disableTypography>Contact</ListItemText>
+                    <ListItem divider button component={Link} to="/contact" selected={props.value === 4} onClick={() => {setOpenDrawer(false); props.setValue(4);}}>
+                        <ListItemText className={props.value === 4 ? `${classes.drawerItem} ${classes.drawerItemSelected}` : classes.drawerItem} disableTypography>Contact</ListItemText>
                     </ListItem>
-                    <ListItem divider button component={Link} className={classes.drawerItemEstimate} to="/estimate" selected={value === 5} onClick={() => {setOpenDrawer(false); setValue(5);}}>
-                        <ListItemText className={value === 5 ? `${classes.drawerItem} ${classes.drawerItemSelected}` : classes.drawerItem} disableTypography>Free Estimate</ListItemText>
+                    <ListItem divider button component={Link} className={classes.drawerItemEstimate} to="/estimate" selected={props.value === 5} onClick={() => {setOpenDrawer(false); props.setValue(5);}}>
+                        <ListItemText className={props.value === 5 ? `${classes.drawerItem} ${classes.drawerItemSelected}` : classes.drawerItem} disableTypography>Free Estimate</ListItemText>
                     </ListItem>
                 </List>
             </SwipeableDrawer>
@@ -282,7 +286,7 @@ export default function Header(props){
           <AppBar position="fixed" height="10px" color="primary" className={classes.appbar}>
               <Toolbar disableGutters>
                   <Button component={Link} disableRipple to="/" className={classes.logoContainer} onClick={() => {
-                      setValue(0);
+                      props.setValue(0);
                   }}>
                     <img src={logo} alt="company logo" className={classes.logo}  />
                   </Button>
