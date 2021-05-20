@@ -42,7 +42,13 @@ const useStyles = makeStyles(theme => ({
             marginRight: 0,
             marginTop: "2em"
         }
-    }
+    },
+    learnButton: {
+        ...theme.typography.learnButton,
+        fontSize: "0.7rem",
+        height: 35,
+        padding: 5
+    },
 }))
 
 export default function CallToAction(props){
@@ -51,7 +57,7 @@ export default function CallToAction(props){
     const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
 
     return (
-        <Grid container style={{}} justify={matchesSM ? "center": "space-between"} alignItems="center" className={classes.background} direction={matchesSM ? "column" : "row"}>
+        <Grid container justify={matchesSM ? "center": "space-between"} alignItems="center" className={classes.background} direction={matchesSM ? "column" : "row"}>
             <Grid item style={{ marginLeft: matchesSM ? 0 : "5rem", textAlign: matchesSM ? "center" : "inherit"}}>
                 <Grid container direction="column">
                     <Grid item>
